@@ -3,7 +3,7 @@ name: CI Pipeline
 on:
   push:
     branches:
-      - example
+      - main
 
 env:
   REGISTRY: ghcr.io
@@ -30,14 +30,7 @@ jobs:
       # так как Docker теги не поддерживают заглавные буквы
       - name: Convert repository owner to lowercase
         run: echo "REPO_OWNER=${GITHUB_REPOSITORY_OWNER,,}" >> $GITHUB_ENV
-
-      - name: Build and push Database image
-        uses: docker/build-push-action@v5
-        with:
-          context: ./database
-          push: true
-          tags: ${{ env.REGISTRY }}/${{ env.REPO_OWNER }}/studentclass-db:latest
-
+        
       - name: Build and push Backend image
         uses: docker/build-push-action@v5
         with:
